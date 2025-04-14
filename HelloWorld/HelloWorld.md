@@ -1,9 +1,10 @@
 # Hello, World!
 
+
 [RTFM --- Dokumentacja YARA](https://yara.readthedocs.io/en/latest/writingrules.html#writing-yara-rules)
 
 ---
-Myślę, że każdą przygodę z poznawaniem nowego języka rozpoczynamy od Hello, World! Tutaj nie postąpimy inaczej.
+Myślę, że każdą przygodę z poznawaniem nowego języka programowania rozpoczynamy od Hello, World! Tutaj nie postąpimy inaczej.
 
 W celu zapoznania się z narzędziem YARA utworzyłem dwa proste projekty napisane w językach **Go** oraz **Python**, które mają na celu wykonanie tej samej rzeczy.
 
@@ -65,9 +66,11 @@ $ file main.py
 main.py: Python script text executable, ASCII text
 ```
 
----
+## Czym jest YARA?
 
-Nadszedł czas na utworzenie pierwszej reguły w **YARA**.
+**YARA** to narzędzie używane głównie przez analityków malware i specjalistów ds. cyberbezpieczeństwa do identyfikowania i klasyfikowania złośliwego oprogramowania (malware) na podstawie wzorców w plikach. Można powiedzieć, że to coś w rodzaju „grep-a na sterydach” zaprojektowanego specjalnie do wykrywania szkodliwego kodu.
+
+Utwórzmy pierwszą regułę w **YARA**.
 
 Plik *HelloWorld.yar*:
 
@@ -88,15 +91,13 @@ rule check_hello_world
 }
 ```
 
---- 
-
 Wyjaśnienie reguły:
 
 ```yara
 rule check_hello_world // Tutaj utworzyliśmy nazwę dla naszej reguły
 ```
 
----
+## Meta
 
 Sekcja **meta** w regule YARA służy do przechowywania **dodatkowych informacji** o samej regule, takich jak autor, opis, data utworzenia, wersja, itp. Te informacje są tylko informacyjne i nie wpływają na działanie reguły, ale są pomocne przy dokumentowaniu i zarządzaniu regułami.
 
@@ -109,7 +110,7 @@ meta:
         
 ```
 
----
+## Strings
 
 Sekcja **strings** w regule YARA zawiera **ciągi znaków** lub **wzorce bajtowe**, które są używane do wykrywania pasujących fragmentów w analizowanych plikach. Celem tej sekcji jest zdefiniowanie, jakie dane będą poszukiwane w pliku, aby reguła mogła dopasować się do pliku na podstawie tych danych. Ciągi w tej sekcji mogą być różnego rodzaju, np. tekstowe ciągi znaków lub bajty w formacie szesnastkowym.
 
@@ -118,7 +119,8 @@ strings:
     $hello_world_str = "Hello, World!" // Tekst, który będziemy szukać w naszych plikach
 ```
 
----
+## Condition
+
 Sekcja **condition** w regule YARA jest jedną z najważniejszych części, ponieważ **określa, kiedy reguła pasuje** do analizowanego pliku. W sekcji tej definiujemy logiczne warunki, które muszą być spełnione, aby reguła została uznana za **dopasowaną**. Mój warunek sprawdza czy w analizowanym pliku znajduje się ciąg znaków lub wzorzec przypisany do zmiennej `$hello_world_str`.
 
 ```yara
@@ -126,9 +128,9 @@ condition:
     $hello_world_str // Zmienna utworzona w sekcji strings
 ```
 
---- 
+## Testy reguły
 
-Teraz kiedy wiemy co nasza reguła ma zrobić oraz mamy przygotowane pliki, które możemy przeanalizować nadszedł czas na uruchomienie naszej reguły. 
+Teraz kiedy wiemy co nasza reguła powinna zrobić oraz mamy przygotowane pliki, które możemy przeanalizować nadszedł czas na uruchomienie naszej reguły. W tym celu wykonujemy polecenie `yara`. Aby móc korzystać z polecenia **YARA** należy wcześniej zainstalować narzędzie podąając za instrukcją, która jest dostępna w oficjalnej dokumentacji. 
 
 ```sh
 $ yara HelloWorld.yar Go/hello_world_go
@@ -143,3 +145,6 @@ check_hello_world Python/main.py
 ```
 
 ![03_Hello_World_YARA](Assets/03_Hello_World_YARA.png)
+
+Nasza reguła zadziałała w obu przypadkach. Efekt wykonania reguły widzimy poniżej wykonanego polecenia. 
+W badanych plikach został odnaleziony ciąg znaków `Hello, World!` o czym informuje nas zwrócona nazwa naszej metody.
