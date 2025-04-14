@@ -4,7 +4,7 @@
 [RTFM --- Dokumentacja YARA](https://yara.readthedocs.io/en/latest/writingrules.html#writing-yara-rules)
 
 ---
-Myślę, że każdą przygodę z poznawaniem nowego języka programowania rozpoczynamy od Hello, World! Tutaj nie postąpimy inaczej.
+Myślę, że każdą przygodę z poznawaniem nowego języka programowania rozpoczynamy od Hello, World! Tutaj nie postąpię inaczej.
 
 W celu zapoznania się z narzędziem YARA utworzyłem dwa proste projekty napisane w językach **Go** oraz **Python**, które mają na celu wykonanie tej samej rzeczy.
 
@@ -34,7 +34,7 @@ Wykonując ostatni krok został utworzony plik wykonywalny dla mojej maszyny o p
 
 ![01_Hello_World_Go](Assets/01_Hello_World_Go.png)
 
-Za pomocą polecenia `file hello_world_go` wykonałem prostą analizę pliku dzięki czemu uzyskałem podstawowe informacje takie jak, format, architektura, czy jest to plik wykonywalny, tekstowy, skompilowany, itp.
+Za pomocą polecenia: `file hello_world_go` wykonałem prostą analizę pliku dzięki czemu uzyskałem podstawowe informacje takie jak, format, architektura, czy jest to plik wykonywalny, tekstowy, skompilowany, itp.
 
 ```sh
 $ file hello_world_go
@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
 ![02_Hello_World_Python](Assets/02_Hello_World_Python.png)
 
-Analiza pliku za pomocą polecenia `file main.py`
+Analiza pliku za pomocą polecenia: `file main.py`
 
 ```sh
 $ file main.py
@@ -70,7 +70,7 @@ main.py: Python script text executable, ASCII text
 
 **YARA** to narzędzie używane głównie przez analityków malware i specjalistów ds. cyberbezpieczeństwa do identyfikowania i klasyfikowania złośliwego oprogramowania (malware) na podstawie wzorców w plikach. Można powiedzieć, że to coś w rodzaju „grep-a na sterydach” zaprojektowanego specjalnie do wykrywania szkodliwego kodu.
 
-Utwórzmy pierwszą regułę w **YARA**.
+Utworzyłem pierwszą regułę w **YARA**.
 
 Plik *HelloWorld.yar*:
 
@@ -130,7 +130,7 @@ condition:
 
 ## Testy reguły
 
-Teraz kiedy wiemy co nasza reguła powinna zrobić oraz mamy przygotowane pliki, które możemy przeanalizować nadszedł czas na uruchomienie naszej reguły. W tym celu wykonujemy polecenie `yara`. Aby móc korzystać z polecenia **YARA** należy wcześniej zainstalować narzędzie podąając za instrukcją, która jest dostępna w oficjalnej dokumentacji. 
+Teraz kiedy wiem co reguła ma zrobić oraz mam przygotowane pliki, które mogę przeanalizować nadszedł czas na uruchomienie reguły. W tym celu wykonałem polecenie `yara`. 
 
 ```sh
 $ yara HelloWorld.yar Go/hello_world_go
@@ -146,5 +146,5 @@ check_hello_world Python/main.py
 
 ![03_Hello_World_YARA](Assets/03_Hello_World_YARA.png)
 
-Nasza reguła zadziałała w obu przypadkach. Efekt wykonania reguły widzimy poniżej wykonanego polecenia. 
+Moja reguła zadziałała w obu przypadkach. Efekt wykonania reguły jest widoczny poniżej wykonanego polecenia. 
 W badanych plikach został odnaleziony ciąg znaków `Hello, World!` o czym informuje nas zwrócona nazwa naszej metody.
